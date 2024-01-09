@@ -34,6 +34,9 @@ public class WeatherServiceImpl implements WeatherService {
 	@Value("${forecastSummaryxRapidAPIHost}")
 	private String forecastSummaryxRapidAPIHost;
 	
+	@Value("${hourlyForecastUrl}")
+	private String hourlyForecastUrl;
+
 	/**
 	 * This method is fetching Forecast Summary By Location Name from Rapid API
 	 */
@@ -54,8 +57,34 @@ public class WeatherServiceImpl implements WeatherService {
 			log.error("Something went wrong while fetching data from Rapid API",e);
 			throw new ResponseStatusException(
 					HttpStatus.INTERNAL_SERVER_ERROR,
-					"Caught Exception while calling endpoint of"
-					+ " Rapid API for weather Forecast SummaryBy Location Name",e);
+					"Caught an Exception while calling endpoint of"
+					+ " Rapid API for weather Forecast Summary By Location Name",e);
+		}
+		
+	}
+
+	/**
+	 * This method is fetching weather Hourly Forecast By Location Name from Rapid API
+	 */
+	@Override
+	public Object getHourlyForecast() {
+		try {
+			HttpHeaders httpHeaders = new HttpHeaders();
+			httpHeaders.set("X-RapidAPI-Key", forecastSummaryxRapidAPIKey);
+			httpHeaders.set("X-RapidAPI-Host", forecastSummaryxRapidAPIHost);
+			
+			// Make get call to the Rapid API
+			ResponseEntity<String> response = restTemplate.exchange(hourlyForecastUrl, HttpMethod.GET,
+					new HttpEntity<>(httpHeaders), String.class);
+			log.info("Output from Rapid API:{}", response.getBody());
+			return response.getBody();
+			
+		} catch (Exception e) {
+			log.error("Something went wrong while fetching data from Rapid API",e);
+			throw new ResponseStatusException(
+					HttpStatus.INTERNAL_SERVER_ERROR,
+					"Caught an Exception while calling endpoint of"
+					+ " Rapid API for weather Hourly Forecast By Location Name",e);
 		}
 		
 	}
