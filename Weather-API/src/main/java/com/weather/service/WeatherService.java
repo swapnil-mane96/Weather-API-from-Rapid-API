@@ -6,4 +6,6 @@ package com.weather.service;
 public interface WeatherService {
 	
 	Object getForecastSummary();
+	
+	Object getHourlyForecast();
 }
