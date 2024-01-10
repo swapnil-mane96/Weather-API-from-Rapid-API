@@ -1,11 +1,13 @@
 package com.weather.service;
 
+import com.weather.exception.ApiLimitExceedException;
+
 /**
  * @author Swapnil Mane
  */
 public interface WeatherService {
 	
-	Object getForecastSummary();
+	Object getForecastSummary()throws ApiLimitExceedException;
 	
-	Object getHourlyForecast();
+	Object getHourlyForecast() throws ApiLimitExceedException;
 }
