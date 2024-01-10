@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.weather.exception.ApiLimitExceedException;
 import com.weather.service.WeatherService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -39,9 +40,10 @@ public class WeatherServiceImpl implements WeatherService {
 
 	/**
 	 * This method is fetching Forecast Summary By Location Name from Rapid API
+	 * @throws ApiLimitExceedException 
 	 */
 	@Override
-	public Object getForecastSummary() {
+	public Object getForecastSummary() throws ApiLimitExceedException{
 		try {
 			HttpHeaders httpHeaders = new HttpHeaders();
 			httpHeaders.set("X-RapidAPI-Key", forecastSummaryxRapidAPIKey);
@@ -55,19 +57,17 @@ public class WeatherServiceImpl implements WeatherService {
 			
 		} catch (Exception e) {
 			log.error("Something went wrong while fetching data from Rapid API",e);
-			throw new ResponseStatusException(
-					HttpStatus.INTERNAL_SERVER_ERROR,
-					"Caught an Exception while calling endpoint of"
-					+ " Rapid API for weather Forecast Summary By Location Name",e);
+			throw new ApiLimitExceedException("You have exceeded the DAILY quota for Requests, please try again after 24Hrs");
 		}
 		
 	}
 
 	/**
 	 * This method is fetching weather Hourly Forecast By Location Name from Rapid API
+	 * @throws ApiLimitExceedException 
 	 */
 	@Override
-	public Object getHourlyForecast() {
+	public Object getHourlyForecast() throws ApiLimitExceedException {
 		try {
 			HttpHeaders httpHeaders = new HttpHeaders();
 			httpHeaders.set("X-RapidAPI-Key", forecastSummaryxRapidAPIKey);
@@ -81,10 +81,7 @@ public class WeatherServiceImpl implements WeatherService {
 			
 		} catch (Exception e) {
 			log.error("Something went wrong while fetching data from Rapid API",e);
-			throw new ResponseStatusException(
-					HttpStatus.INTERNAL_SERVER_ERROR,
-					"Caught an Exception while calling endpoint of"
-					+ " Rapid API for weather Hourly Forecast By Location Name",e);
+			throw new ApiLimitExceedException("You have exceeded the DAILY quota for Requests, please try again after 24Hrs");
 		}
 		
 	}
