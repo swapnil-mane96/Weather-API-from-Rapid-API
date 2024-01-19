@@ -23,5 +23,29 @@ public class GlobalExceptionHandler {
 		String errMessage = apiLimitExceedException.getMessage();
 		return new ResponseEntity<ExceptionalMessage>(new ExceptionalMessage(errMessage,LocalDateTime.now(),false), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+	
+	@ExceptionHandler(UserNotFoundException.class)
+	public ResponseEntity<ExceptionalMessage> userNotFoundException (UserNotFoundException userNotFoundException){
+		String errMessage = userNotFoundException.getMessage();
+		return new ResponseEntity<ExceptionalMessage>(new ExceptionalMessage(errMessage,LocalDateTime.now(),false), HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(UsersNotPresentException.class)
+	public ResponseEntity<ExceptionalMessage> usersNotPresentException (UsersNotPresentException usersNotPresentException){
+		String errMessage = usersNotPresentException.getMessage();
+		return new ResponseEntity<ExceptionalMessage>(new ExceptionalMessage(errMessage,LocalDateTime.now(),false), HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(UserAlreadyPresentException.class)
+	public ResponseEntity<ExceptionalMessage> userAlreadyPresentException (UserAlreadyPresentException userAlreadyPresentException){
+		String errMessage = userAlreadyPresentException.getMessage();
+		return new ResponseEntity<ExceptionalMessage>(new ExceptionalMessage(errMessage,LocalDateTime.now(),false), HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(BadCredentialException.class)
+	public ResponseEntity<ExceptionalMessage> badCredentialException (BadCredentialException badCredentialException){
+		String errMessage = badCredentialException.getMessage();
+		return new ResponseEntity<ExceptionalMessage>(new ExceptionalMessage(errMessage,LocalDateTime.now(),false), HttpStatus.BAD_REQUEST);
+	}
 
 }
