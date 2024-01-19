@@ -13,6 +13,7 @@ import com.weather.entity.Users;
 import com.weather.exception.UserAlreadyPresentException;
 import com.weather.exception.UsersNotPresentException;
 import com.weather.model.ReturnData;
+import com.weather.service.UserService;
 import com.weather.serviceImpl.UserServiceImpl;
 
 /**
@@ -23,12 +24,12 @@ import com.weather.serviceImpl.UserServiceImpl;
 public class UsersController {
 	
 	@Autowired
-	private UserServiceImpl userServiceImpl;
+	private UserService userService;
 	
 	@PostMapping("/saveuser")
 	public ResponseEntity<?> createUser(@RequestBody Users users){
 		ReturnData returnData = new ReturnData();
-		 Users newUser = this.userServiceImpl.createUser(users);
+		 Users newUser = this.userService.createUser(users);
 		 returnData.setData(newUser);
 		 returnData.setMessage("User added successfully");
 		 returnData.setStatusCode("201");
@@ -37,7 +38,7 @@ public class UsersController {
 	
 	@GetMapping("/getallusers")
 	public ResponseEntity<?> getUsers(){
-		return ResponseEntity.ok(this.userServiceImpl.getAllUsers());
+		return ResponseEntity.ok(this.userService.getAllUsers());
 	}
 	
 }

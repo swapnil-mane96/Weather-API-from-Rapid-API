@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<Users> getAllUsers() {
 		 List<Users> allUsers = this.userRepository.findAll();
-		 if (allUsers.equals(null)) {
+		 if (allUsers==null) {
 			 throw new UsersNotPresentException("No users present. pls register first to get users");
 		 } else
 			 return allUsers;
