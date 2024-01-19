@@ -10,4 +10,6 @@ import lombok.Setter;
 @Setter
 public class ReturnData {
 	private Object data;
+	private String message;
+	private String statusCode;
 }
