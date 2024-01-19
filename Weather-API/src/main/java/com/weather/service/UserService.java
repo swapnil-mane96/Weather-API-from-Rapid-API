@@ -11,7 +11,7 @@ import com.weather.exception.UsersNotPresentException;
  */
 public interface UserService {
 	
-	Users createUser(Users users)throws UserAlreadyPresentException;
+	Users createUser(Users users);
 	
-	List<Users> getAllUsers() throws UsersNotPresentException;
+	List<Users> getAllUsers();
 }
